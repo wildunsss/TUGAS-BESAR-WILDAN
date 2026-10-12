@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Form Lapangan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="atas">
+  <div class="isi">
+    <div class="merek">Sistem Venue</div>
+  </div>
+</header>
+
+<div class="wadah">
+  <div class="judul">
+    <h1>Form lapangan</h1>
+  </div>
+
+  <form class="form-kartu" method="post">
+    <div class="kolom">
+
+      <div class="penuh">
+        <label for="area_id">Area</label>
+        <select id="area_id" name="area_id">
+          <option value="1">Gedung A (indoor)</option>
+          <option value="2">Lapangan Terbuka (outdoor)</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="kode">Kode lapangan</label>
+        <input id="kode" name="kode" placeholder="Contoh: FTS-02">
+      </div>
+
+      <div>
+        <label for="nama_lapangan">Nama lapangan</label>
+        <input id="nama_lapangan" name="nama_lapangan">
+      </div>
+
+      <div>
+        <label for="cabang_olahraga">Cabang olahraga</label>
+        <input id="cabang_olahraga" name="cabang_olahraga" placeholder="Futsal, Badminton, Basket">
+      </div>
+
+      <div>
+        <label for="jenis_permukaan">Jenis rumput / lantai</label>
+        <select id="jenis_permukaan" name="jenis_permukaan">
+          <option value="rumput_alami">Rumput alami</option>
+          <option value="rumput_sintetis">Rumput sintetis</option>
+          <option value="vinyl">Vinyl</option>
+          <option value="parket">Parket</option>
+          <option value="semen">Semen</option>
+          <option value="karpet">Karpet</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="panjang">Panjang (m)</label>
+        <input id="panjang" name="panjang" type="number" step="0.01" min="0">
+      </div>
+
+      <div>
+        <label for="lebar">Lebar (m)</label>
+        <input id="lebar" name="lebar" type="number" step="0.01" min="0">
+      </div>
+
+      <div class="penuh">
+        <label for="status_fisik">Status fisik</label>
+        <select id="status_fisik" name="status_fisik">
+          <option value="baik">Baik</option>
+          <option value="perlu_perbaikan">Perlu perbaikan</option>
+          <option value="rusak">Rusak</option>
+        </select>
+      </div>
+
+      <div class="penuh">
+        <label for="keterangan">Keterangan</label>
+        <textarea id="keterangan" name="keterangan" rows="3"></textarea>
+      </div>
+
+    </div>
+
+    <div class="aksi">
+      <button class="tombol utama">Simpan lapangan</button>
+      <a class="tombol" href="index.html">Batal</a>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

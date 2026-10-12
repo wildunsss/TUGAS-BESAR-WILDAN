@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Lapangan</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="atas">
+  <div class="isi">
+    <div class="merek">Sistem Venue</div>
+    <div class="tersedia">
+      <span>Lapangan tersedia:</span>
+      <b>Badminton 1</b>
+      <b>Futsal 1</b>
+      <b>Basket Utama</b>
+    </div>
+  </div>
+</header>
+
+<div class="wadah">
+  <div class="judul">
+    <h1>Data lapangan</h1>
+    <a class="tombol utama" href="form.html">Tambah lapangan</a>
+  </div>
+
+  <form class="cari" method="get">
+    <input name="cari" placeholder="Cari nama atau kode lapangan">
+    <select name="status">
+      <option value="">Semua status</option>
+      <option value="baik">Baik</option>
+      <option value="perlu_perbaikan">Perlu perbaikan</option>
+      <option value="rusak">Rusak</option>
+    </select>
+    <button class="tombol">Cari</button>
+  </form>
+
+  <div class="kartu">
+    <table>
+      <thead>
+        <tr>
+          <th>Kode</th>
+          <th>Nama</th>
+          <th>Area</th>
+          <th>Cabang</th>
+          <th>Permukaan</th>
+          <th>Ukuran</th>
+          <th>Status</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>BDM-01</td>
+          <td>Badminton 1</td>
+          <td>Gedung A</td>
+          <td>Badminton</td>
+          <td>Vinyl</td>
+          <td>13,4 x 6,1 m</td>
+          <td><span class="lencana baik">Baik</span></td>
+          <td>
+            <a class="tombol kecil" href="form.html">Edit</a>
+            <form method="post"><button class="tombol kecil merah">Hapus</button></form>
+          </td>
+        </tr>
+        <tr>
+          <td>FTS-01</td>
+          <td>Futsal 1</td>
+          <td>Lapangan Terbuka</td>
+          <td>Futsal</td>
+          <td>Rumput sintetis</td>
+          <td>25 x 15 m</td>
+          <td><span class="lencana perbaikan">Perlu perbaikan</span></td>
+          <td>
+            <a class="tombol kecil" href="form.html">Edit</a>
+            <form method="post"><button class="tombol kecil merah">Hapus</button></form>
+          </td>
+        </tr>
+        <tr>
+          <td>BSK-01</td>
+          <td>Basket Utama</td>
+          <td>Gedung A</td>
+          <td>Basket</td>
+          <td>Parket</td>
+          <td>28 x 15 m</td>
+          <td><span class="lencana rusak">Rusak</span></td>
+          <td>
+            <a class="tombol kecil" href="form.html">Edit</a>
+            <form method="post"><button class="tombol kecil merah">Hapus</button></form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>
