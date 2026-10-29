@@ -98,6 +98,11 @@ class LapanganController extends Controller
         return $this->processSave($request, 0);
     }
 
+    public function show($id)
+    {
+        return redirect()->route('lapangan.edit', $id);
+    }
+
     public function edit(Request $request, $id)
     {
         $lapangan = Lapangan::find($id);
@@ -218,7 +223,7 @@ class LapanganController extends Controller
 
     public function destroy(Request $request, $id = null)
     {
-        $id = $id ?? $request->input('id') ?? $request->query('id');
+        $id = $id ?? $request->route('lapangan') ?? $request->input('id') ?? $request->query('id');
 
         if ($id) {
             $lapangan = Lapangan::find($id);
