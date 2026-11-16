@@ -5,10 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Area;
 use App\Models\Lapangan;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 
-class LapanganController extends Controller
+class LapanganController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('role:admin', except: ['index', 'show', 'switchRole']),
+        ];
+    }
+
+    public function switchRole(Request $request)
+    {
+        $roleBaru = $request->input('role', 'admin');
+        if (!in_array($roleBaru, ['admin', 'user'])) {
+            $roleBaru = 'admin';
+        }
+
+        session(['user_role' => $roleBaru]);
+
+        return redirect()->route('lapangan.index')
+            ->with('pesan', 'Peran berhasil dialihkan menjadi: ' . strtoupper($roleBaru) . ' (' . ($roleBaru === 'admin' ? 'Hak Akses Penuh: CRUD' : 'Hak Akses Terbatas: Hanya Lihat') . ')');
+    }
+
     public function index(Request $request)
     {
         $cari = $request->query('cari', '');
@@ -39,11 +61,13 @@ class LapanganController extends Controller
 
         $pesanParam = $request->query('pesan');
         $pesan = session('pesan') ?? ($daftarPesan[$pesanParam] ?? '');
+        $galatAkses = session('galat_akses', '');
 
         $judulTab = 'Data Lapangan';
         $permukaan = Lapangan::PERMUKAAN;
         $statusFisik = Lapangan::STATUS_FISIK;
         $kelasStatus = Lapangan::KELAS_STATUS;
+        $currentRole = session('user_role', 'admin');
 
         return view('lapangan', compact(
             'data',
@@ -51,15 +75,19 @@ class LapanganController extends Controller
             'status',
             'tersedia',
             'pesan',
+            'galatAkses',
             'judulTab',
             'permukaan',
             'statusFisik',
-            'kelasStatus'
+            'kelasStatus',
+            'currentRole'
         ));
     }
 
     public function create()
     {
+        $this->cekHakAksesAdmin();
+
         $areas = Area::orderBy('nama_area')->get();
         $id = 0;
         $judulTab = 'Tambah Lapangan';
@@ -95,6 +123,7 @@ class LapanganController extends Controller
 
     public function store(Request $request)
     {
+        $this->cekHakAksesAdmin();
         return $this->processSave($request, 0);
     }
 
@@ -105,6 +134,8 @@ class LapanganController extends Controller
 
     public function edit(Request $request, $id)
     {
+        $this->cekHakAksesAdmin();
+
         $lapangan = Lapangan::find($id);
 
         if (!$lapangan) {
@@ -146,13 +177,22 @@ class LapanganController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->cekHakAksesAdmin();
         return $this->processSave($request, (int) $id);
     }
 
     public function storeOrUpdate(Request $request)
     {
+        $this->cekHakAksesAdmin();
         $id = (int) $request->input('id', 0);
         return $this->processSave($request, $id);
+    }
+
+    private function cekHakAksesAdmin(): void
+    {
+        if (session('user_role', 'admin') !== 'admin') {
+            abort(403, 'Akses ditolak: Fitur ini hanya dapat diakses oleh Admin.');
+        }
     }
 
     private function processSave(Request $request, int $id)
@@ -223,6 +263,8 @@ class LapanganController extends Controller
 
     public function destroy(Request $request, $id = null)
     {
+        $this->cekHakAksesAdmin();
+
         $id = $id ?? $request->route('lapangan') ?? $request->input('id') ?? $request->query('id');
 
         if ($id) {
