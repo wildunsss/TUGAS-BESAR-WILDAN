@@ -9,6 +9,9 @@
 <body>
 
 <header class="atas">
+  <div class="garis-tepi"></div>
+  <div class="garis-kotak-kiri"></div>
+  <div class="garis-kotak-kanan"></div>
   <div class="isi">
     <div class="merek">Sistem Venue</div>
     @if (!empty($tersedia) && count($tersedia) > 0)
