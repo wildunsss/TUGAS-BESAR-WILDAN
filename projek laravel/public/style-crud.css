@@ -265,3 +265,276 @@ label {
   text-align: center;
   color: var(--redup);
 }
+
+
+.baris-pengguna {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-top: 14px;
+}
+
+.info-pengguna {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.lencana-peran {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.peran-admin {
+  background: #dcf5e6;
+  color: #166534;
+}
+
+.peran-member {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.tombol-logout {
+  font-size: 13px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: #fff;
+  color: #b42318;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.tombol-logout:hover {
+  background: #fee4e2;
+  border-color: #b42318;
+}
+
+.halaman-auth {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 16px;
+  background: linear-gradient(135deg, #eef2ff 0%, #f6f7fb 100%);
+}
+
+.wadah-auth {
+  width: 100%;
+  max-width: 480px;
+}
+
+.kartu-auth {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--garis);
+  padding: 32px 28px;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.auth-header h1 {
+  margin: 0 0 6px;
+  font-size: 24px;
+  color: var(--biru-tua);
+}
+
+.auth-header p {
+  margin: 0;
+  color: var(--redup);
+  font-size: 14px;
+}
+
+.box-akun-dosen {
+  background: #f8fafc;
+  border: 1.5px dashed #94a3b8;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 24px;
+}
+
+.box-akun-header {
+  font-weight: 700;
+  font-size: 13px;
+  color: #334155;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.grid-akun {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .grid-akun {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kartu-akun {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.kartu-akun:hover {
+  border-color: var(--biru);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(47, 75, 216, 0.15);
+}
+
+.kartu-akun.kartu-admin {
+  border-left: 4px solid #16a34a;
+}
+
+.kartu-akun.kartu-member {
+  border-left: 4px solid #0284c7;
+}
+
+.badge-role-admin {
+  background: #dcf5e6;
+  color: #166534;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.badge-role-member {
+  background: #e0f2fe;
+  color: #0369a1;
+  font-weight: 700;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.kartu-akun p {
+  margin: 2px 0;
+  line-height: 1.4;
+  color: #475569;
+}
+
+.kartu-akun code {
+  background: #f1f5f9;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 11px;
+  color: #0f172a;
+}
+
+.btn-pilih-akun {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  padding: 5px 6px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  text-align: center;
+}
+
+.kartu-akun:hover .btn-pilih-akun {
+  background: var(--biru);
+  color: #fff;
+  border-color: var(--biru);
+}
+
+.auth-form .grup-input {
+  margin-bottom: 16px;
+}
+
+.auth-form label {
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 6px;
+  color: var(--teks);
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="email"],
+.auth-form input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--garis);
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.auth-form input:focus {
+  border-color: var(--biru);
+  box-shadow: 0 0 0 3px rgba(47, 75, 216, 0.1);
+}
+
+.tombol-blok {
+  width: 100%;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--biru);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+
+.tombol-blok:hover {
+  background: var(--biru-tua);
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--redup);
+}
+
+.auth-footer a {
+  color: var(--biru);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}

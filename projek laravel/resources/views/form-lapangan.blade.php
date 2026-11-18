@@ -19,6 +19,17 @@
       @endforeach
     </div>
     @endif
+
+    <div class="baris-pengguna">
+      <div class="info-pengguna">
+        <span>Masuk sebagai: <strong>{{ Auth::user()->name ?? 'Admin' }}</strong></span>
+        <span class="lencana-peran peran-admin">👑 Admin</span>
+      </div>
+      <form action="{{ route('logout') }}" method="post" style="margin: 0;">
+        @csrf
+        <button type="submit" class="tombol-logout">Keluar (Logout)</button>
+      </form>
+    </div>
   </div>
 </header>
 

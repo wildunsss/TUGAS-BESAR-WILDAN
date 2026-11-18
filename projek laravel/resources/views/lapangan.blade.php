@@ -5,55 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ $judulTab }}</title>
 <link rel="stylesheet" href="{{ asset('style-crud.css') }}">
-<style>
-  .baris-akses {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 10px 14px;
-    border-radius: 8px;
-    margin-top: 14px;
-  }
-  .info-peran {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-  }
-  .lencana-peran {
-    display: inline-block;
-    padding: 3px 10px;
-    border-radius: 99px;
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-  .peran-admin {
-    background: #dcf5e6;
-    color: #166534;
-  }
-  .peran-user {
-    background: #fdf0c8;
-    color: #8a5a00;
-  }
-  .tombol-switch {
-    font-size: 13px;
-    padding: 5px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background: #fff;
-    color: #1b2430;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  .tombol-switch:hover {
-    background: #f0f2f5;
-  }
-</style>
 </head>
 <body>
 
@@ -70,22 +21,16 @@
     </div>
     @endif
 
-    <div class="baris-akses">
-      <div class="info-peran">
-        <span>Hak Akses Saat Ini:</span>
-        <span class="lencana-peran {{ $currentRole === 'admin' ? 'peran-admin' : 'peran-user' }}">
-          {{ $currentRole === 'admin' ? '👑 Admin (CRUD Penuh)' : '👤 User (Hanya Lihat)' }}
+    <div class="baris-pengguna">
+      <div class="info-pengguna">
+        <span>Masuk sebagai: <strong>{{ Auth::user()->name ?? 'Pengguna' }}</strong></span>
+        <span class="lencana-peran {{ $currentRole === 'admin' ? 'peran-admin' : 'peran-member' }}">
+          {{ $currentRole === 'admin' ? '👑 Admin (CRUD Penuh)' : '👤 Member (Hanya Lihat)' }}
         </span>
       </div>
-      <form action="{{ route('switch.role') }}" method="post" style="margin: 0;">
+      <form action="{{ route('logout') }}" method="post" style="margin: 0;">
         @csrf
-        @if ($currentRole === 'admin')
-          <input type="hidden" name="role" value="user">
-          <button type="submit" class="tombol-switch">Ganti ke Peran User</button>
-        @else
-          <input type="hidden" name="role" value="admin">
-          <button type="submit" class="tombol-switch">Ganti ke Peran Admin</button>
-        @endif
+        <button type="submit" class="tombol-logout">Keluar (Logout)</button>
       </form>
     </div>
   </div>
@@ -98,7 +43,7 @@
       <a class="tombol utama" href="{{ route('lapangan.create') }}">+ Tambah lapangan</a>
     @else
       <span class="lencana perbaikan" style="padding: 7px 14px; font-size: 13px;">
-        🔒 Mode Pengguna: Hak Akses Tambah, Edit & Hapus Dinonaktifkan
+        🔒 Mode Member: Hak Akses Tambah, Edit & Hapus Dinonaktifkan
       </span>
     @endif
   </div>

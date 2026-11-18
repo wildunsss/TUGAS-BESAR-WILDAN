@@ -2,14 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         if (DB::table('areas')->count() == 0) {
@@ -45,5 +44,23 @@ class DatabaseSeeder extends Seeder
                 ],
             ]);
         }
+
+        User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin Venue',
+                'password' => Hash::make('admin123'),
+                'role' => 'admin',
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'member@gmail.com'],
+            [
+                'name' => 'Member Venue',
+                'password' => Hash::make('member123'),
+                'role' => 'member',
+            ]
+        );
     }
 }

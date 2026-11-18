@@ -7,6 +7,7 @@ use App\Models\Lapangan;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class LapanganController extends Controller implements HasMiddleware
@@ -14,21 +15,9 @@ class LapanganController extends Controller implements HasMiddleware
     public static function middleware(): array
     {
         return [
-            new Middleware('role:admin', except: ['index', 'show', 'switchRole']),
+            new Middleware('auth'),
+            new Middleware('role:admin', except: ['index', 'show']),
         ];
-    }
-
-    public function switchRole(Request $request)
-    {
-        $roleBaru = $request->input('role', 'admin');
-        if (!in_array($roleBaru, ['admin', 'user'])) {
-            $roleBaru = 'admin';
-        }
-
-        session(['user_role' => $roleBaru]);
-
-        return redirect()->route('lapangan.index')
-            ->with('pesan', 'Peran berhasil dialihkan menjadi: ' . strtoupper($roleBaru) . ' (' . ($roleBaru === 'admin' ? 'Hak Akses Penuh: CRUD' : 'Hak Akses Terbatas: Hanya Lihat') . ')');
     }
 
     public function index(Request $request)
@@ -67,7 +56,8 @@ class LapanganController extends Controller implements HasMiddleware
         $permukaan = Lapangan::PERMUKAAN;
         $statusFisik = Lapangan::STATUS_FISIK;
         $kelasStatus = Lapangan::KELAS_STATUS;
-        $currentRole = session('user_role', 'admin');
+        $currentUser = Auth::user();
+        $currentRole = $currentUser ? $currentUser->role : 'member';
 
         return view('lapangan', compact(
             'data',
@@ -80,6 +70,7 @@ class LapanganController extends Controller implements HasMiddleware
             'permukaan',
             'statusFisik',
             'kelasStatus',
+            'currentUser',
             'currentRole'
         ));
     }
@@ -190,7 +181,7 @@ class LapanganController extends Controller implements HasMiddleware
 
     private function cekHakAksesAdmin(): void
     {
-        if (session('user_role', 'admin') !== 'admin') {
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
             abort(403, 'Akses ditolak: Fitur ini hanya dapat diakses oleh Admin.');
         }
     }
