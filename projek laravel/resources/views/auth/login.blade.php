@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Masuk - Sistem Venue</title>
+<title>Login - Sistem Venue</title>
 <link rel="stylesheet" href="{{ asset('style-crud.css') }}">
 </head>
 <body class="halaman-auth">
@@ -11,73 +11,66 @@
 <div class="wadah-auth">
   <div class="kartu-auth">
     <div class="auth-header">
-      <h1>Sistem Venue</h1>
-      <p>Silakan masuk ke akun Anda</p>
+      <h1>Login</h1>
+      <p>Masuk ke Sistem Venue</p>
     </div>
 
     @if (session('pesan'))
       <div class="pesan">{{ session('pesan') }}</div>
     @endif
 
-    @if (session('galat'))
-      <div class="galat">{{ session('galat') }}</div>
-    @endif
-
     @if ($errors->any())
       <div class="galat">
-        <ul>
-          @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
+        @foreach ($errors->all() as $error)
+          {{ $error }}<br>
+        @endforeach
       </div>
     @endif
-
-    <div class="box-akun-dosen">
-      <div class="box-akun-header">
-        <span>📋 Akun Demo untuk Dosen / Penguji:</span>
-      </div>
-      <div class="grid-akun">
-        <div class="kartu-akun kartu-admin" onclick="isiAkun('admin@gmail.com', 'admin123')">
-          <span class="badge-role-admin">👑 Admin</span>
-          <p><strong>Akses:</strong> CRUD Penuh</p>
-          <p><strong>Email:</strong> <code>admin@gmail.com</code></p>
-          <p><strong>Password:</strong> <code>admin123</code></p>
-          <button type="button" class="btn-pilih-akun">Gunakan Akun Admin</button>
-        </div>
-
-        <div class="kartu-akun kartu-member" onclick="isiAkun('member@gmail.com', 'member123')">
-          <span class="badge-role-member">👤 Member</span>
-          <p><strong>Akses:</strong> Hanya Lihat</p>
-          <p><strong>Email:</strong> <code>member@gmail.com</code></p>
-          <p><strong>Password:</strong> <code>member123</code></p>
-          <button type="button" class="btn-pilih-akun">Gunakan Akun Member</button>
-        </div>
-      </div>
-      <div style="margin-top: 10px; font-size: 11px; color: var(--redup); text-align: center;">
-        Klik salah satu kartu di atas untuk mengisi formulir login secara otomatis.
-      </div>
-    </div>
 
     <form class="auth-form" method="post" action="{{ route('login') }}">
       @csrf
-
       <div class="grup-input">
-        <label for="email">Alamat Email</label>
-        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="nama@email.com" required autofocus>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="email@contoh.com" required autofocus>
       </div>
-
       <div class="grup-input">
-        <label for="password">Kata Sandi</label>
+        <label for="password">Password</label>
         <input type="password" id="password" name="password" placeholder="Masukkan password" required>
       </div>
-
-      <button type="submit" class="tombol-blok">Masuk Sekarang</button>
+      <button type="submit" class="tombol-blok">Masuk</button>
     </form>
 
     <div class="auth-footer">
-      Belum memiliki akun? <a href="{{ route('register') }}">Daftar Member Baru</a>
+      Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a>
     </div>
+
+    <hr style="border: none; border-top: 1px solid #e1e5ec; margin: 20px 0 16px;">
+
+    <table class="tabel-akun-demo">
+      <thead>
+        <tr>
+          <th colspan="3">Akun Demo</th>
+        </tr>
+        <tr>
+          <td>Peran</td>
+          <td>Email</td>
+          <td>Password</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr onclick="isiAkun('admin@gmail.com', 'admin123')" style="cursor:pointer;" title="Klik untuk mengisi form login">
+          <td><span class="lencana-peran peran-admin">Admin</span></td>
+          <td>admin@gmail.com</td>
+          <td>admin123</td>
+        </tr>
+        <tr onclick="isiAkun('member@gmail.com', 'member123')" style="cursor:pointer;" title="Klik untuk mengisi form login">
+          <td><span class="lencana-peran peran-member">Member</span></td>
+          <td>member@gmail.com</td>
+          <td>member123</td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="font-size: 11px; color: #999; text-align: center; margin-top: 6px;">Klik baris untuk mengisi form login otomatis</div>
   </div>
 </div>
 
@@ -85,7 +78,6 @@
 function isiAkun(email, pass) {
   document.getElementById('email').value = email;
   document.getElementById('password').value = pass;
-  document.getElementById('password').focus();
 }
 </script>
 

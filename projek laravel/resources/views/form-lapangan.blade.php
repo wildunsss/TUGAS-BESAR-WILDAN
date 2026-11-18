@@ -23,11 +23,11 @@
     <div class="baris-pengguna">
       <div class="info-pengguna">
         <span>Masuk sebagai: <strong>{{ Auth::user()->name ?? 'Admin' }}</strong></span>
-        <span class="lencana-peran peran-admin">👑 Admin</span>
+        <span class="lencana-peran peran-admin">Admin</span>
       </div>
       <form action="{{ route('logout') }}" method="post" style="margin: 0;">
         @csrf
-        <button type="submit" class="tombol-logout">Keluar (Logout)</button>
+        <button type="submit" class="tombol-logout">Logout</button>
       </form>
     </div>
   </div>
@@ -48,7 +48,7 @@
     </div>
   @endif
 
-  <form class="form-kartu" method="post" action="{{ $id ? route('lapangan.update', $id) : route('lapangan.store') }}">
+  <form class="form-kartu" method="post" action="{{ $id ? route('lapangan.update', $id) : route('lapangan.store') }}" enctype="multipart/form-data">
     @csrf
     @if ($id)
       @method('PUT')
@@ -118,6 +118,18 @@
       <div class="penuh">
         <label for="keterangan">Keterangan</label>
         <textarea id="keterangan" name="keterangan" rows="3">{{ $f['keterangan'] }}</textarea>
+      </div>
+
+      <div class="penuh">
+        <label for="foto">Foto Lapangan</label>
+        @if (!empty($f['foto']))
+          <div style="margin-bottom: 8px;">
+            <img src="{{ asset($f['foto']) }}" alt="Foto saat ini" style="max-width: 200px; max-height: 150px; border-radius: 6px; border: 1px solid #e1e5ec;">
+            <div style="font-size: 12px; color: #667085; margin-top: 4px;">Foto saat ini. Upload baru untuk mengganti.</div>
+          </div>
+        @endif
+        <input type="file" id="foto" name="foto" accept="image/jpeg,image/png,image/jpg,image/webp">
+        <div style="font-size: 12px; color: #667085; margin-top: 4px;">Format: JPG, PNG, WEBP. Maks: 2MB</div>
       </div>
 
     </div>

@@ -93,6 +93,7 @@ class LapanganController extends Controller implements HasMiddleware
             'lebar'           => old('lebar', ''),
             'status_fisik'    => old('status_fisik', 'baik'),
             'keterangan'      => old('keterangan', ''),
+            'foto'            => '',
         ];
 
         $galat = session('galat', []);
@@ -146,6 +147,7 @@ class LapanganController extends Controller implements HasMiddleware
             'lebar'           => old('lebar', $lapangan->lebar + 0),
             'status_fisik'    => old('status_fisik', $lapangan->status_fisik),
             'keterangan'      => old('keterangan', $lapangan->keterangan),
+            'foto'            => $lapangan->foto,
         ];
 
         $galat = session('galat', []);
@@ -201,6 +203,7 @@ class LapanganController extends Controller implements HasMiddleware
             'lebar'           => ['required', 'numeric', 'gt:0'],
             'status_fisik'    => ['required', 'in:' . $statusFisikKeys],
             'keterangan'      => ['nullable', 'string'],
+            'foto'            => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ], [
             'area_id.required'         => 'Area wajib dipilih.',
             'area_id.exists'           => 'Area wajib dipilih.',
@@ -218,6 +221,9 @@ class LapanganController extends Controller implements HasMiddleware
             'lebar.gt'                 => 'Lebar harus angka lebih dari 0.',
             'status_fisik.required'    => 'Status fisik tidak valid.',
             'status_fisik.in'          => 'Status fisik tidak valid.',
+            'foto.image'               => 'File foto harus berupa gambar.',
+            'foto.mimes'               => 'Format foto harus berupa jpeg, png, jpg, atau webp.',
+            'foto.max'                 => 'Ukuran foto maksimal 2MB.',
         ]);
 
         if ($validator->fails()) {
@@ -240,6 +246,20 @@ class LapanganController extends Controller implements HasMiddleware
             'keterangan'      => $request->input('keterangan'),
         ];
 
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $namaFile = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/lapangan'), $namaFile);
+            $data['foto'] = 'uploads/lapangan/' . $namaFile;
+
+            if ($id > 0) {
+                $lama = Lapangan::find($id);
+                if ($lama && $lama->foto && file_exists(public_path($lama->foto))) {
+                    @unlink(public_path($lama->foto));
+                }
+            }
+        }
+
         if ($id > 0) {
             $lapangan = Lapangan::findOrFail($id);
             $lapangan->update($data);
@@ -261,6 +281,9 @@ class LapanganController extends Controller implements HasMiddleware
         if ($id) {
             $lapangan = Lapangan::find($id);
             if ($lapangan) {
+                if ($lapangan->foto && file_exists(public_path($lapangan->foto))) {
+                    @unlink(public_path($lapangan->foto));
+                }
                 $lapangan->delete();
             }
         }

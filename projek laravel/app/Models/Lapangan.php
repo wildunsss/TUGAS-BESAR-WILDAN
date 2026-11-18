@@ -21,6 +21,7 @@ class Lapangan extends Model
         'lebar',
         'status_fisik',
         'keterangan',
+        'foto',
     ];
 
     public const PERMUKAAN = [

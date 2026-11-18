@@ -25,12 +25,12 @@
       <div class="info-pengguna">
         <span>Masuk sebagai: <strong>{{ Auth::user()->name ?? 'Pengguna' }}</strong></span>
         <span class="lencana-peran {{ $currentRole === 'admin' ? 'peran-admin' : 'peran-member' }}">
-          {{ $currentRole === 'admin' ? '👑 Admin (CRUD Penuh)' : '👤 Member (Hanya Lihat)' }}
+          {{ $currentRole === 'admin' ? 'Admin' : 'Member' }}
         </span>
       </div>
       <form action="{{ route('logout') }}" method="post" style="margin: 0;">
         @csrf
-        <button type="submit" class="tombol-logout">Keluar (Logout)</button>
+        <button type="submit" class="tombol-logout">Logout</button>
       </form>
     </div>
   </div>
@@ -43,7 +43,7 @@
       <a class="tombol utama" href="{{ route('lapangan.create') }}">+ Tambah lapangan</a>
     @else
       <span class="lencana perbaikan" style="padding: 7px 14px; font-size: 13px;">
-        🔒 Mode Member: Hak Akses Tambah, Edit & Hapus Dinonaktifkan
+        🔒 Mode Member: Tambah, Edit & Hapus Dinonaktifkan
       </span>
     @endif
   </div>
@@ -54,7 +54,7 @@
 
   @if (!empty($galatAkses))
     <div class="galat">
-      <strong>Pemberitahuan Hak Akses:</strong> {{ $galatAkses }}
+      <strong>Hak Akses:</strong> {{ $galatAkses }}
     </div>
   @endif
 
@@ -73,6 +73,7 @@
     <table>
       <thead>
         <tr>
+          <th>Foto</th>
           <th>Kode</th>
           <th>Nama</th>
           <th>Area</th>
@@ -88,11 +89,18 @@
       <tbody>
         @if ($data->isEmpty())
           <tr>
-            <td colspan="{{ $currentRole === 'admin' ? 8 : 7 }}" class="kosong">Belum ada data lapangan.</td>
+            <td colspan="{{ $currentRole === 'admin' ? 9 : 8 }}" class="kosong">Belum ada data lapangan.</td>
           </tr>
         @else
           @foreach ($data as $l)
           <tr>
+            <td>
+              @if ($l->foto)
+                <img src="{{ asset($l->foto) }}" alt="{{ $l->nama_lapangan }}" class="foto-lapangan">
+              @else
+                <div class="foto-kosong">Tidak ada foto</div>
+              @endif
+            </td>
             <td>{{ $l->kode }}</td>
             <td>{{ $l->nama_lapangan }}</td>
             <td>{{ $l->area->nama_area ?? '-' }}</td>

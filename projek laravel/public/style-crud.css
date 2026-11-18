@@ -329,20 +329,20 @@ label {
   align-items: center;
   justify-content: center;
   padding: 30px 16px;
-  background: linear-gradient(135deg, #eef2ff 0%, #f6f7fb 100%);
+  background: var(--latar);
 }
 
 .wadah-auth {
   width: 100%;
-  max-width: 480px;
+  max-width: 420px;
 }
 
 .kartu-auth {
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
   border: 1px solid var(--garis);
-  padding: 32px 28px;
+  padding: 28px 24px;
 }
 
 .auth-header {
@@ -537,4 +537,64 @@ label {
 
 .auth-footer a:hover {
   text-decoration: underline;
+}
+
+
+.foto-lapangan {
+  width: 80px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--garis);
+}
+
+.foto-kosong {
+  width: 80px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  border: 1px dashed #cbd5e1;
+  border-radius: 6px;
+  font-size: 10px;
+  color: #94a3b8;
+  text-align: center;
+}
+
+.tabel-akun-demo {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.tabel-akun-demo thead th {
+  background: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--teks);
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: none;
+}
+
+.tabel-akun-demo thead td {
+  font-size: 11px;
+  color: var(--redup);
+  font-weight: 600;
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--garis);
+}
+
+.tabel-akun-demo tbody tr {
+  transition: background 0.15s;
+}
+
+.tabel-akun-demo tbody tr:hover {
+  background: #f8fafc;
+}
+
+.tabel-akun-demo tbody td {
+  padding: 8px;
+  border-bottom: none;
 }
