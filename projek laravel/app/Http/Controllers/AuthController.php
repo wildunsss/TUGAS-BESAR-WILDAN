@@ -12,10 +12,15 @@ class AuthController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
-            return redirect()->route('lapangan.index');
+            return redirect()->route('dashboard');
         }
 
         return view('auth.login');
+    }
+
+    public function showLogin()
+    {
+        return $this->showLoginForm();
     }
 
     public function login(Request $request)
@@ -32,8 +37,8 @@ class AuthController extends Controller
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
 
-            return redirect()->intended(route('lapangan.index'))
-                ->with('pesan', 'Selamat datang, ' . Auth::user()->name . '! Anda masuk sebagai ' . strtoupper(Auth::user()->role) . '.');
+            return redirect()->intended(route('dashboard'))
+                ->with('success', 'Selamat datang, ' . Auth::user()->name . '! Anda masuk sebagai ' . strtoupper(Auth::user()->role) . '.');
         }
 
         return back()->withErrors([
@@ -44,10 +49,15 @@ class AuthController extends Controller
     public function showRegisterForm()
     {
         if (Auth::check()) {
-            return redirect()->route('lapangan.index');
+            return redirect()->route('dashboard');
         }
 
         return view('auth.register');
+    }
+
+    public function showRegister()
+    {
+        return $this->showRegisterForm();
     }
 
     public function register(Request $request)
@@ -76,14 +86,13 @@ class AuthController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('lapangan.index')
-            ->with('pesan', 'Registrasi berhasil! Selamat datang, ' . $user->name . '. Akun Anda terdaftar sebagai MEMBER.');
+        return redirect()->route('dashboard')
+            ->with('success', 'Registrasi berhasil! Selamat datang, ' . $user->name . '. Akun Anda terdaftar sebagai MEMBER.');
     }
 
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
